@@ -42,6 +42,7 @@ else
 <link href='css/loader.css' rel='stylesheet' type='text/css'>
 <link href='css/music.css' rel='stylesheet' type='text/css'>
 <link href='css/reddit.css' rel='stylesheet' type='text/css'>
+<link href='css/evernote.css' rel='stylesheet' type='text/css'>
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
 <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900' rel='stylesheet' type='text/css'>
 <title>Untitled Document</title>
@@ -67,6 +68,7 @@ gettasks();
 getnextclass();
 getmusic();
 getreddit();
+getnotes();
 getlocation();	//Calls weather
 </script>
 </head>
@@ -84,6 +86,11 @@ if(!$client->getAccessToken()) {
 <div id="col1">
 
     <div class="card" id="next_class">
+    </div>
+    <div class="card" id="evernotes">
+    	<span class="everheader">My Notes</span>
+        <ul id="notes">
+        </ul> 
     </div>
     <div class="card" id="weather">
         <div id="weather_main">

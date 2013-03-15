@@ -12,8 +12,14 @@ $push_bullet_device_id 			= '';
 //	Can be gotten from http://www.wunderground.com/weather/api
 $weather_underground_apikey 	= '';
 
-//	Reddit (NOTE: the read/unread feature of the mail icon does not work)
-$reddit_username = '';
+/*
+*
+*	To configure reddit open /js/ and edit line 206
+*
+*/
+
+//Evernote
+$evernote_developer_token 		= '';
 
 //	Last.fm settings, used for album art
 $last_fm_api_key				= '';

@@ -202,7 +202,6 @@ function musicdata(json)
 
 function getreddit()
 {
-	//http://www.reddit.com/user/fodawim/about.json?jsonp=redditkarma
 	var script2 = document.createElement("script");
 	script2.src = "http://www.reddit.com/user/fodawim/about.json?jsonp=redditkarma";
 	document.getElementsByTagName("head")[0].appendChild(script2);
@@ -219,7 +218,27 @@ function redditkarma(json)
 
 
 
-
+function getnotes()
+{
+	var script2 = document.createElement("script");
+	script2.src = "evernote_json.php";
+	document.getElementsByTagName("head")[0].appendChild(script2);
+}
+function notedata(json)
+{
+	
+	var length = json.length,
+	element = null;
+	for (var i = 0; i < length; i++) {
+		element = json[i];
+		document.getElementById('notes').innerHTML = document.getElementById('notes').innerHTML+
+			'<li><span class="icon">&nbsp;</span><span class="text">'+element+'</span></li>';
+	}
+	
+	setTimeout("getnotes()", 3600000);//Update every hour
+	displayload('Loading Note Data...');
+	
+}
 
 
 
