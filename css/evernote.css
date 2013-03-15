@@ -1,0 +1,53 @@
+@charset "UTF-8";
+/* CSS Document */
+
+#evernotes
+{
+	padding-top:10px;
+}
+#evernotes .everheader
+{
+	width:80%;
+	padding-left:5%;
+	padding-right:5%;
+	padding-bottom:5px;
+	margin-left:5%;
+	font-size:24pt;
+	font-weight:200;
+	display:block;
+	border-bottom:1px solid #e4e4e4;
+}
+#notes
+{
+	width:100%;
+	list-style:none;
+	padding-left:0px !important;
+	margin-top:0px !important;
+}
+#notes li
+{
+	width:80%;
+	padding-right:10%;
+	margin-left:5%;
+	padding-bottom:5px;
+	padding-top:5px;
+	font-size:20pt;
+	font-weight:200;
+	border-bottom:1px solid #e4e4e4;
+	display:block;	
+}
+#notes li:last-child
+{
+	border-bottom:0px !important;
+}
+#notes li .icon
+{
+	content:"";
+	background:url(../img/evernotes.png);
+	display:block;
+	float:left;
+	width:33px;
+	height:33px;
+	margin-right:15px;
+	background-size:contain;
+}
