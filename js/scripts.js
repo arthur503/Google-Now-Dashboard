@@ -227,6 +227,8 @@ function getnotes()
 function notedata(json)
 {
 	
+	document.getElementById('notes').innerHTML = '';
+	
 	var length = json.length,
 	element = null;
 	for (var i = 0; i < length; i++) {
