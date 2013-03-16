@@ -101,7 +101,7 @@ else
 	$tasks = $tasksService->tasks->listTasks($assignments['id']);
 	$taskArray = array();
 	
-	if(count($tasks['items'])>0)
+	if(count($tasks['items'])>0 and $tasks['items'][0]['title'] != null)
 	{
 		foreach($tasks['items'] as $task)
 		{

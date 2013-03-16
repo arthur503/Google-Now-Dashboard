@@ -114,12 +114,7 @@ if ($client->getAccessToken()) {
 	
 	if($data['summary'] == '')
 		$json = array(
-			'title'=>'No Upcoming Class',
-			'time'=>'--:--',
-			'countdown'=>'&nbsp;',
-			'end'=>'&nbsp;',
-			'location'=>'&nbsp;',
-			'severity'=>'&nbsp;'
+			'empty'=>true
 		);
 	else
 		$json = array(

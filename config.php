@@ -18,7 +18,7 @@ $weather_underground_apikey 	= '';
 *
 */
 
-//Evernote
+//Evernote Evernote dev key https://www.evernote.com/api/DeveloperToken.action
 $evernote_developer_token 		= '';
 
 //	Last.fm settings, used for album art

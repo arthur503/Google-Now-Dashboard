@@ -67,5 +67,8 @@ foreach($notes->notes as $anote)
 	array_push($note_titles,$anote->title);
 }
 
+if($note_titles[0] == null)
+	$note_titles = array('empty'=>true);
+
 
 echo 'notedata('.json_encode($note_titles).');';

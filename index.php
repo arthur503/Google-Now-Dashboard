@@ -76,6 +76,7 @@ getlocation();	//Calls weather
 <body>
 
 <div id="alerts">Loading...</div>
+
 <?php
 if(!$client->getAccessToken()) {
   $authUrl = $client->createAuthUrl();

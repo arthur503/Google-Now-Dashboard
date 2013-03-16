@@ -1,4 +1,11 @@
-
+function hidecard(id)
+{
+	document.getElementById(id).style.display = 'none';
+}
+function displaycard(id)
+{
+	document.getElementById(id).style.display = 'block';
+}
 
 function getlocation()
 {
@@ -28,6 +35,9 @@ function getweather(lat,lon,country,city,state)
 }
 function weather(json)
 {
+	
+	displaycard('weather');
+	
 	document.getElementById('weather_main_img').src = 'img/weather/'+json.current_conditions.icon+'.png';
 	document.getElementById('weather_img_current_cond').innerHTML = json.current_conditions.weather;
 	document.getElementById('weather_main_current_temp').innerHTML = json.current_conditions.temperature;
@@ -66,6 +76,7 @@ function weather(json)
 
 function gettasks()
 {
+	displayload('Loading Tasks...');
 	var script2 = document.createElement("script");
 	script2.src = "index.php?m=task";
 	document.getElementsByTagName("head")[0].appendChild(script2);
@@ -78,6 +89,7 @@ function tasks(json)
 	
 		if(!json.empty)
 		{
+			displaycard('tasks');
 			var length = json.length,
 			element = null;
 			for (var i = 0; i < length; i++) {
@@ -113,21 +125,15 @@ function tasks(json)
 		}
 		else
 		{
-			document.getElementById('assignments').innerHTML = '<li class="task_completed">'+
-							'<span class="task_status" style="background:#cc0000;"><br /><br /></span>'+
-							'<span class="task_stuff">'+
-								'<span class="task_title">No Tasks</span>'+
-							'</span>'+
-							'<div class="clr"></div>'+
-						'</li>';
+			hidecard('tasks');
 		}
 	
 	setTimeout("gettasks()", 900000);//Update every 900 seconds [15 minutes]
-	displayload('Loading Tasks...');
 	
 }
 function getnextclass()
 {
+	displayload('Loading Class Data...');
 	var script2 = document.createElement("script");
 	script2.src = "index.php?m=cal";
 	document.getElementsByTagName("head")[0].appendChild(script2);
@@ -135,31 +141,36 @@ function getnextclass()
 function nextclass(json)
 {
 	
-	if(json.time == '--:--')
-		hide = ' display:none;';
+	if(!json.empty)
+	{
+		displaycard('next_class');
+		
+			document.getElementById('next_class').innerHTML = ''+
+				'<span class="next_title">'+json.title+'</span>'+
+				'<span class="next_bigtime">'+json.time+'</span>'+
+				'<span class="next_assoctime" style="color:#'+json.severity+';">'+json.countdown+'</span>'+
+				'<span class="next_location" style="color:#'+json.severity+';">'+json.location+'</span>'+
+				'<span class="next_push_container" onclick="pushbullet(\'address\',\''+json.title+' at '+json.location+'\',\''+json.location+'\');"><span class="push_text">Send to phone</span></span>';
+			setTimeout("getnextclass()", 60000);//Update every 60 seconds [1 minute]
+	}
 	else
-		hide = '';
-	
-		document.getElementById('next_class').innerHTML = ''+
-			'<span class="next_title">'+json.title+'</span>'+
-    		'<span class="next_bigtime" style="'+hide+'">'+json.time+'</span>'+
-        	'<span class="next_assoctime" style="color:#'+json.severity+'; '+hide+'">'+json.countdown+'</span>'+
-        	'<span class="next_location" style="color:#'+json.severity+'; '+hide+'">'+json.location+'</span>'+
-        	'<span class="next_push_container" style="'+hide+'" onclick="pushbullet(\'address\',\''+json.title+' at '+json.location+'\',\''+json.location+'\');"><span class="push_text">Send to phone</span></span>';
+	{
+		hidecard('next_class');
 		setTimeout("getnextclass()", 120000);//Update every 120 seconds [2 minutes]
-		displayload('Loading Next Class Data...');
+	}
+	
 }
 
 function displayload(message)
 {
-	document.getElementById('alerts').style.opacity = 1;
-	document.getElementById('alerts').innerHTML = message;
-	setTimeout("hideload()", 2000);
+	//document.getElementById('alerts').style.opacity = 1;
+	//document.getElementById('alerts').innerHTML = message;
+	//setTimeout("hideload()", 2000);
 }
 function hideload()
 {
-	document.getElementById('alerts').style.opacity = 0;
-	document.getElementById('alerts').innerHTML = '';
+	//document.getElementById('alerts').style.opacity = 0;
+	//document.getElementById('alerts').innerHTML = '';
 }
 
 
@@ -185,19 +196,28 @@ function getmusic()
 }
 function musicdata(json)
 {
-		
-	document.getElementById('music_player').innerHTML = ''+
-		'<img src="'+json.artwork+'" class="album_art"/>'+
-          '<div class="payer_data">'+
-              '<span class="player_track_name">'+json.track+'</span>'+
-              '<span class="player_track_artist">'+json.author+'</span>'+
-              '<span class="player_track_album">'+json.title+'</span>'+
-              '<div class="clr"></div>'+
-          '</div>'+
-        '<div class="clr"></div>';
-		
-		setTimeout("getmusic()", 60000);//Update every minute
-		displayload('Loading Music Data...');
+	
+	if(!json.empty)
+	{	
+		displaycard('music_player');
+		document.getElementById('music_player').innerHTML = ''+
+			'<img src="'+json.artwork+'" class="album_art"/>'+
+			  '<div class="payer_data">'+
+				  '<span class="player_track_name">'+json.track+'</span>'+
+				  '<span class="player_track_artist">'+json.author+'</span>'+
+				  '<span class="player_track_album">'+json.title+'</span>'+
+				  '<div class="clr"></div>'+
+			  '</div>'+
+			'<div class="clr"></div>';
+			
+			setTimeout("getmusic()", 60000);//Update every minute
+			displayload('Loading Music Data...');
+	}
+	else
+	{
+		hidecard('music_player');
+		setTimeout("getmusic()", 120000);//Update every 2 minutes
+	}
 }
 
 function getreddit()
@@ -208,12 +228,19 @@ function getreddit()
 }
 function redditkarma(json)
 {
-		
+	if(!json.error)
+	{
+		displaycard('reddit');
 		document.getElementById('reddit').innerHTML = ''+
-		'<a class="mail_some" href="http://www.reddit.com/message/inbox/" target="_blank"></a>'+
-        '<span class="username">'+json.data.name+'</span>'+
-        '<span class="karma">'+json.data.link_karma+' &bull; '+json.data.comment_karma+'</span>'+
-        '<div class="clr"></div>';
+			'<a class="mail_some" href="http://www.reddit.com/message/inbox/" target="_blank"></a>'+
+			'<span class="username">'+json.data.name+'</span>'+
+			'<span class="karma">'+json.data.link_karma+' &bull; '+json.data.comment_karma+'</span>'+
+			'<div class="clr"></div>';
+	}
+	else
+	{
+		hidecard('reddit');
+	}
 }
 
 
@@ -229,12 +256,20 @@ function notedata(json)
 	
 	document.getElementById('notes').innerHTML = '';
 	
-	var length = json.length,
-	element = null;
-	for (var i = 0; i < length; i++) {
-		element = json[i];
-		document.getElementById('notes').innerHTML = document.getElementById('notes').innerHTML+
-			'<li><span class="icon">&nbsp;</span><span class="text">'+element+'</span></li>';
+	if(!json.empty)
+	{
+		displaycard('evernotes');
+		var length = json.length,
+		element = null;
+		for (var i = 0; i < length; i++) {
+			element = json[i];
+			document.getElementById('notes').innerHTML = document.getElementById('notes').innerHTML+
+				'<li><span class="icon">&nbsp;</span><span class="text">'+element+'</span></li>';
+		}
+	}
+	else
+	{
+		hidecard('evernotes');
 	}
 	
 	setTimeout("getnotes()", 3600000);//Update every hour
